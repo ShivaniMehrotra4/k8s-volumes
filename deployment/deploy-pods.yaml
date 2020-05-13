@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    my-app: my-nginx
+spec:
+  replicas: 4
+  selector:
+    matchExpressions:
+      - key: my-app
+        operator: In
+        values:
+          - my-nginx
+  template:
+    metadata:
+      labels:
+        my-app: my-nginx
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx
+        ports:
+          - containerPort: 80
+        volumeMounts:
+          - mountPath: /usr/share/nginx/html
+            name: deploy-vol
+
+      volumes:
+      - name: deploy-vol
+        persistentVolumeClaim: 
+          claimName: deploy-pvc
+
+
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: pod-nginx
+#   labels:
+#     my-app: my-nginx
+# spec:
+#   containers:
+#   - name: nginx-pod
+#     image: nginx
+#     ports:
+#       - containerPort: 80
+#     volumeMounts:
+#       - mountPath: /usr/share/nginx/html
+#         name: deploy-vol
+
+#   volumes:
+#   - name: deploy-vol
+#     persistentVolumeClaim: 
+#       claimName: deploy-pvc
+

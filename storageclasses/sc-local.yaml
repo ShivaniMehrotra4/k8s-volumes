@@ -1,0 +1,11 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+
+# WaitForFirstConsumer is used to delay the binding proces until Pod scheduling.
+# Delaying volume binding allows the scheduler to consider all of a Pod’s scheduling 
+# constraints when choosing an appropriate PV for a PVC.

@@ -1,0 +1,29 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: deploy-vol
+
+spec:
+  capacity:
+    storage: 5Gi
+
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/deploy-vol
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: deploy-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  volumeName: deploy-vol
+  resources:
+    requests:
+      storage: 1Gi

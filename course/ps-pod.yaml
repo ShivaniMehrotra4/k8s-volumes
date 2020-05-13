@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: hello-pod
+  labels:
+    my-pod: hello-pod
+spec:
+  
+  containers:
+    - image: ubuntu:latest
+      name: check-pv-pvc
+      command:
+        - /bin/bash
+        - "-c"
+        - "sleep 60m"
+      volumeMounts:
+        - mountPath: /hello
+          name: pv-pvc-confusion
+          
+  volumes:
+    - name: pv-pvc-confusion
+      persistentVolumeClaim:
+        claimName: pvc-claim

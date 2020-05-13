@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: host-pod
+spec:
+  containers:
+    - name: my-container
+      image: nginx:alpine
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: host-volume
+          mountPath: /hello-pv-pvc
+
+  volumes:
+    - name: host-volume
+      persistentVolumeClaim:
+        claimName: host-pvc
+
